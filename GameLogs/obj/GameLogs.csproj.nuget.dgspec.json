@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tschi\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj": {}
+    "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tschi\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj": {
+    "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tschi\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj",
+        "projectUniqueName": "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj",
         "projectName": "GameLogs",
-        "projectPath": "C:\\Users\\tschi\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj",
-        "packagesPath": "C:\\Users\\tschi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tschi\\Source\\Repos\\GameLogs\\GameLogs\\obj\\",
+        "projectPath": "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj",
+        "packagesPath": "C:\\Users\\pb34nwq\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\tschi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pb34nwq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
