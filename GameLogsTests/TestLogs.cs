@@ -1,4 +1,4 @@
-namespace GameLogsTest
+namespace GameLogsTests
 {
     public class Tests
     {
