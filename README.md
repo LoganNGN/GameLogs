@@ -60,5 +60,5 @@ Vous obtenez tous les tests en échecs présentant le même message d'erreur:
 
 Cela prouve que votre projet se compile et que les tests sont opérationnels.
 
-##License
+## License
 [License](main/license.txt)
