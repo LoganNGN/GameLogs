@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class user
+    public class User
     {
         #region private attribute
         private string _username;
         private string _password;
         private string _email;
-        private List<user> users = new List<user>();
+        private List<User> users = new List<User>();
         #endregion
 
         #region public methodes
-        public user(string username, string email, string password) 
+        public User(string username, string email, string password) 
         {
             _username = username;
             _email = email;
