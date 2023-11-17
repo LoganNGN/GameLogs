@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj": {}
+    "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj": {
+    "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj",
+        "projectUniqueName": "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj",
         "projectName": "GameLogs",
-        "projectPath": "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\GameLogs.csproj",
+        "projectPath": "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\GameLogs.csproj",
         "packagesPath": "C:\\Users\\pb34nwq\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\obj\\",
+        "outputPath": "C:\\Users\\pb34nwq\\Source\\Repos\\GameLogs\\GameLogs\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -62,7 +62,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
