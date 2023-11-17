@@ -13,7 +13,7 @@ namespace GameLogs
         {
             set
             {
-                throw new NotImplementedException();
+                signUp = value;
             }
         }
         #endregion
