@@ -16,14 +16,14 @@ namespace GameLogs
         #region public methods
         public searchGame(string keyWord)
         {
-            keyWord = _keyWord;
+            _keyWord = keyWord;
         }
 
         public string setKeyWord
         {
             set 
             { 
-                throw new NotImplementedException(); 
+                _keyWord += value;
             }
         }
         #endregion

@@ -18,9 +18,9 @@ namespace GameLogs
         #region public methodes
         public user(string username, string email, string password) 
         {
-            username = _username;
-            email = _email;
-            password = _password;
+            _username = username;
+            _email = email;
+            _password = password;
         }
 
         public string username 
@@ -31,7 +31,7 @@ namespace GameLogs
             }
             set 
             {
-                throw new NotImplementedException();            
+                _username = value;            
             } 
         }
 
@@ -43,7 +43,7 @@ namespace GameLogs
             }
             set
             {
-                throw new NotImplementedException();
+                _password = value;
             }
         }
 
@@ -55,7 +55,7 @@ namespace GameLogs
             }
             set 
             { 
-                throw new NotImplementedException();
+                _email = value;
             }
         }
 
