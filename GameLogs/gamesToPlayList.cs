@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class gamesToPlayList
+    public class GamesToPlayList
     {
-        public gamesToPlayList() 
+        public GamesToPlayList() 
         { 
             throw new NotImplementedException();
         }

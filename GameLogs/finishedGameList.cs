@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class finishedGameList
+    public class FinishedGameList
     {
-        public finishedGameList() { throw new NotImplementedException();}
+        public FinishedGameList() 
+        {
+            throw new NotImplementedException();
+        }
     }
 }

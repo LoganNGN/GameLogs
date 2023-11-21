@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class mainPage
+    public class MainPage
     {
-        public mainPage() { throw new NotImplementedException(); }
+        public MainPage() 
+        { 
+            throw new NotImplementedException(); 
+        }
     }
 }

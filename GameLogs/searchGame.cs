@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class searchGame
+    public class SearchGame
     {
         #region private attributes
         private string _keyWord;
@@ -14,7 +14,7 @@ namespace GameLogs
         #endregion
 
         #region public methods
-        public searchGame(string keyWord)
+        public SearchGame(string keyWord)
         {
             _keyWord = keyWord;
         }

@@ -16,10 +16,9 @@ namespace GameLogs
         #endregion
 
         #region public methodes
-        public User(string username, string email, string password) 
+        public User(string username, string password) 
         {
             _username = username;
-            _email = email;
             _password = password;
         }
 
@@ -47,19 +46,7 @@ namespace GameLogs
             }
         }
 
-        public string email
-        {
-            get
-            {
-                return _email;
-            }
-            set 
-            { 
-                _email = value;
-            }
-        }
-
-        public string addUser() 
+        public string addUser(string user) 
         {
             throw new NotImplementedException();
         }

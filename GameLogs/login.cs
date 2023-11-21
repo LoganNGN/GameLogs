@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class login
+    public class Login
     {
         #region public methodes
         public string signUp

@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace GameLogs
 {
-    public class gameList
+    public class GameList
     {
         #region private attribute
-        private List<gameList> gameLists = new List<gameList>();
+        private List<GameList> gameLists = new List<GameList>();
         #endregion
         #region public methods
-        public List<gameList> addGameInList
+        public List<GameList> addGameInList
         {
             get 
             {  
                 throw new NotImplementedException(); 
             }
         }
-        public void removeGame(gameList gameList)
+        public void removeGame(GameList gameList)
         {
             throw new NotImplementedException();
         }
