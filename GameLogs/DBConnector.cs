@@ -1,5 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-
+// TODO update file for our need
 namespace PrototypeDbConnector
 {
     internal class Program
