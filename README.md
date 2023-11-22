@@ -3,7 +3,7 @@
 Logan Nguyen, Raphaël Robert, Sven Raval
 
 ## API to get videogames later on
-https://rawg.io/apidocs
+[API link](https://rawg.io/apidocs)
 
 
 ## Versions et softwares
@@ -11,6 +11,8 @@ https://rawg.io/apidocs
 .NET version 6.0  
 Visual Studio enterprise 2022 last version  
 WinForm C#  
+## Wiki
+[Wiki Page](https://github.com/LoganNGN/GameLogs/wiki)
 
 ## Description du project 
 
