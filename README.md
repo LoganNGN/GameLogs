@@ -11,6 +11,7 @@ Logan Nguyen, Raphaël Robert, Sven Raval
 .NET version 6.0  
 Visual Studio enterprise 2022 last version  
 WinForm C#  
+
 ## Wiki
 [Wiki Page](https://github.com/LoganNGN/GameLogs/wiki)
 
@@ -40,9 +41,7 @@ Menu: Build->Build Solution
 
 [OUTPUT]
 ```
-3>Done building project "TestShopping.csproj".
-========== Rebuild All: 3 succeeded, 0 failed, 0 skipped ==========
-========== Rebuild started at 13:21 and took 00.747 seconds ==========
+//TODO add result
 ```
 ### Exécuter les tests
 
@@ -51,11 +50,11 @@ MENU : Test-> Test Explorer
 
 [INPUT]
 
-![image](https://github.com/CPNV-226a/Shopping/assets/5616312/4d05053e-f261-41a3-b445-f6d79bf80eb1)
+//TODO add result
 
 [OUTPUT]
 
-![image](https://github.com/CPNV-226a/Shopping/assets/5616312/182d2ce6-f4aa-465a-be9c-0215d458ee7c)
+//TODO add result
 
 Vous obtenez tous les tests en échecs présentant le même message d'erreur:
 "System.NotImplementedException:[...]"
