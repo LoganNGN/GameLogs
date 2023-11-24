@@ -10,7 +10,7 @@ namespace PrototypeDbConnector
 
         static void ConnectionToDB(string[] args)
         {
-            users = ExecuteQuerySelect();
+            games = ExecuteQuerySelect();
 
             foreach (string user in users)
             {
@@ -23,7 +23,7 @@ namespace PrototypeDbConnector
             List<string> queryResults = new List<string>();
 
             //TODO Improvement - use an external file to store sensitive data
-            string connString = "server=localhost;user=DBGameLogs;database=classicmodels;port=3306;password=;";
+            string connString = "server=localhost;user=DBGameLogs;database=classicmodels;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
@@ -32,7 +32,8 @@ namespace PrototypeDbConnector
             //prepare the query
             //TODO Improvement - Using @parameter and value to build the query
             //TODO Improvement - https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlparametercollection.addwithvalue?view=dotnet-plat-ext-7.0
-            string query = "SELECT customerNumber, customerName FROM customers WHERE customerNumber < 150;";
+            string query = "SELECT name, releaseDate, gameState FROM Game;";
+            string insertQuery = "INSERT INTO Game (name, description, gameState)" + " VALUES(@title, @description, 1);";
 
             //set and execute the query 
             MySqlCommand cmd = new MySqlCommand(query, connection);
