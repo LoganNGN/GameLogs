@@ -6,14 +6,15 @@ namespace PrototypeDbConnector
     {
         //The collection of results
         static List<string> users = new List<string>();
+        static List<string> games = new List<string>();
 
-        static void Main(string[] args)
+        static void ConnectionToDB(string[] args)
         {
             users = ExecuteQuerySelect();
 
-            foreach (string customer in users)
+            foreach (string user in users)
             {
-                Console.WriteLine(customer);
+                Console.WriteLine(users);
             }
         }
 
@@ -22,7 +23,7 @@ namespace PrototypeDbConnector
             List<string> queryResults = new List<string>();
 
             //TODO Improvement - use an external file to store sensitive data
-            string connString = "server=localhost;user=demoProjetPoo;database=classicmodels;port=3306;password=K5BoyoGA8uCu;";
+            string connString = "server=localhost;user=DBGameLogs;database=classicmodels;port=3306;password=;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);

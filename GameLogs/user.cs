@@ -11,7 +11,6 @@ namespace GameLogs
         #region private attribute
         private string _username;
         private string _password;
-        private string _email;
         private List<User> users = new List<User>();
         #endregion
 
