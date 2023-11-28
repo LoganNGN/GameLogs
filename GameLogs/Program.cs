@@ -10,18 +10,13 @@ namespace GameLogs
         {
             // Initialize application configuration
             ApplicationConfiguration.Initialize();
-
-            // Create an instance of the APIConnector class
-            APIConnector connector = new APIConnector();
-
-            // Define an array of game names to process
-            string[] gameNames = new string[] { "overwatch", "fortnite", "apex_legends" };
-
-            // Process the games and save their data to JSON files
-            connector.ProcessGames(gameNames);
-
             // Run the Windows Forms application
             Application.Run(new Form1());
+
+            // Run the API Connector
+            APIConnector apiConnector = new APIConnector();
+            string[] gameNames = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "games.txt"));
+            apiConnector.ProcessGames(gameNames).Wait();
         }
     }
 }

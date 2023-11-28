@@ -1,35 +1,38 @@
-﻿using Newtonsoft.Json;
-using RawgNET.Manager;
-using RawgNET.Models;
+﻿using System.Net.Http;
+using Newtonsoft.Json;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace GameLogs
 {
     internal class APIConnector
     {
-        private readonly RawgClient client;
+        private readonly HttpClient client;
         private readonly string apiKey;
 
         public APIConnector()
         {
-            string apiKeyPath = "C:\\Users\\tschi\\source\\repos\\GameLogs\\GameLogs\\apikey.txt";
+            string apiKeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "apikey.txt");
             apiKey = File.ReadAllText(apiKeyPath);
-            client = new(new ClientOptions(apiKey));
+            client = new HttpClient();
         }
 
         public async Task ProcessGames(string[] gameNames)
         {
             foreach (string gameName in gameNames)
             {
-                if (await client.IsGameExisting(gameName))
+                HttpResponseMessage response = await client.GetAsync($"https://api.rawg.io/api/games/{gameName}?key={apiKey}");
+                if (response.IsSuccessStatusCode)
                 {
-                    // Fetch detailed information about the game
-                    Game game = await client.GetGame(gameName, true, true);
+                    string responseBody = await response.Content.ReadAsStringAsync();
 
                     // Convert game data to JSON format
-                    string jsonData = JsonConvert.SerializeObject(game, Formatting.Indented);
+                    dynamic gameData = JsonConvert.DeserializeObject(responseBody);
+                    var gameInfo = new { id = gameData.id, name = gameData.name, description = gameData.description };
+                    string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
 
                     // Write JSON data to a file
-                    string fileName = $"{gameName}.json";
+                    string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", gameName, $"{gameName}.json");
                     try
                     {
                         using (StreamWriter writer = new StreamWriter(fileName))
