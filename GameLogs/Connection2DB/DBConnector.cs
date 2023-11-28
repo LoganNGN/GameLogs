@@ -53,7 +53,7 @@ namespace DbConnector
          static private List<string> InsertQuery(ApiData apiData)
          {
             List<string> queryResults = new List<string>();
-            string Json = "C:\\User\\pb34nwq\\Documents\\fortnite.json";
+            string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
 
             string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 

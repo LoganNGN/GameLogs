@@ -12,6 +12,9 @@ namespace GameLogs
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
+            //run dbConnector
+            DbConnector.Program dbConnector = new DbConnector.Program();
         }
     }
 }
