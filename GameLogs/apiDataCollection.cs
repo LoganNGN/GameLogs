@@ -13,5 +13,7 @@ namespace GameLogs.apiDataCollection
         public string name { get; set; }
         public string description { get; set; }
         public string image { get; set; }
+        //GameState returns false for teste purposes
+        public bool? GameState { set { GameState = false; } }
     }
 }

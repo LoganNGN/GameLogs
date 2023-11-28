@@ -2,23 +2,23 @@
 using Newtonsoft.Json;
 using System.Data;
 using MySql.Data.MySqlClient;
-// TODO update file for our need
-namespace PrototypeDbConnector
+using System.Drawing.Text;
+
+namespace DbConnector
 {
     internal class Program
     {
         //The collection of results
         static List<string> writeGame = new List<string>();
         static List<string> displayGames = new List<string>();
+        static List<string> changeGameState = new List<string>();
 
-        static void ConnectionToDB(string[] args)
+        static void ConnectionToDB(string[] args, ApiData apiData)
         {
             displayGames = ExecuteQuerySelect();
-
-            foreach (string game in writeGame)
-            {
-                Console.WriteLine(writeGame);
-            }
+            writeGame = InsertQuery(apiData);
+            changeGameState = UpdateQuery(apiData);
+            
         }
 
         static private List<string> ExecuteQuerySelect()
@@ -26,15 +26,13 @@ namespace PrototypeDbConnector
             List<string> queryResults = new List<string>();
 
             //TODO Improvement - use an external file to store sensitive data
-            string connString = "server=localhost;user=DBGameLogs;database=classicmodels;port=3306;password=Pa$$W0rd;";
+            string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
             connection.Open();
 
             //prepare the query
-            //TODO Improvement - Using @parameter and value to build the query
-            //TODO Improvement - https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient.sqlparametercollection.addwithvalue?view=dotnet-plat-ext-7.0
             string query = "SELECT name, releaseDate, image, description, gameState FROM Game;";
 
             //set and execute the query 
@@ -51,28 +49,29 @@ namespace PrototypeDbConnector
             }
             return queryResults;
         }
-        
-        //method to Update Database
-        public DataTable GetGame(string query)
-        {
-            throw new NotImplementedException();
-        }
 
-        private List<string> InsertQuery(ApiData apiData)
-        {
+         static private List<string> InsertQuery(ApiData apiData)
+         {
             List<string> queryResults = new List<string>();
+            string Json = "C:\\User\\pb34nwq\\Documents\\fortnite.json";
 
-            string connString = "server=localhost;user=DBGameLogs;database=classicmodels;port=3306;password=Pa$$W0rd;";
+            string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
             connection.Open();
 
             //prepare the query
-            //todo add the json file name
-            var root = JsonConvert.DeserializeObject<ApiData>( json );
+            var dataSet = JsonConvert.DeserializeObject<ApiData>( Json );
             //TODO add value parameters
             string insertQuery = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, @gameState );";
+
+            //parameters
+            //TODO figure out how to implement the bool gameState
+            var args = new Dictionary<string, object>() 
+            {
+                {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}
+            };
 
             //set and execute the query 
             MySqlCommand cmd = new MySqlCommand(insertQuery, connection);
@@ -82,11 +81,10 @@ namespace PrototypeDbConnector
         }
 
         //add in method parameter the data value of the form
-        private List<string> UpdateQuery()
+        static private List<string> UpdateQuery(ApiData apiData)
         {
             List<string> queryResults = new List<string>();
-
-            string connString = "server=localhost;user=DBGameLogs;database=classicmodels;port=3306;password=Pa$$W0rd;";
+            string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
@@ -95,7 +93,13 @@ namespace PrototypeDbConnector
             //prepare the query
             //TODO switch case statement for when we want to update the state of the game (todo or finished)
             //TODO add value parameters
-            string updateQuery = "UPDATE INTO Game SET gameState = '@gameState' WHERE id = '@id';";
+            const string updateQuery = "UPDATE INTO Game SET gameState = 'False' WHERE id = '@id';";
+
+            //parameter
+            var args = new Dictionary<string, object>()
+            {
+                {"@id", apiData.id }
+            };
 
             //set and execute the query 
             MySqlCommand cmd = new MySqlCommand(updateQuery, connection);
