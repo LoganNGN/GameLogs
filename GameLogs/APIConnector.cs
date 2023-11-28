@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
+using System.CodeDom.Compiler;
 
 namespace GameLogs
 {
@@ -28,11 +29,11 @@ namespace GameLogs
 
                     // Convert game data to JSON format
                     dynamic gameData = JsonConvert.DeserializeObject(responseBody);
-                    var gameInfo = new { id = gameData.id, name = gameData.name, description = gameData.description };
+                    var gameInfo = new { id = gameData.id, name = gameData.name, description = gameData.description, screenshot = gameData.screenshot };
                     string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
 
                     // Write JSON data to a file
-                    string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", gameName, $"{gameName}.json");
+                    string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "Results", $"{gameName}.json");
                     try
                     {
                         using (StreamWriter writer = new StreamWriter(fileName))
