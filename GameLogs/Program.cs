@@ -9,9 +9,7 @@ namespace GameLogs
         static void Main()
         {
             // Initialize application configuration
-            //ApplicationConfiguration.Initialize();
-            // Run the Windows Forms application
-            //Application.Run(new Form1());
+            ApplicationConfiguration.Initialize();
 
             // Run the API Connector
             APIConnector apiConnector = new APIConnector();
