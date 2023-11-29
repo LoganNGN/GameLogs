@@ -3,8 +3,9 @@ using Newtonsoft.Json;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Drawing.Text;
+using System.Reflection;
 
-namespace DbConnector
+namespace GameLogs.DbConnector
 {
     internal class Program
     {
@@ -13,7 +14,7 @@ namespace DbConnector
         static List<string> displayGames = new List<string>();
         static List<string> changeGameState = new List<string>();
 
-        static void ConnectionToDB(string[] args, ApiData apiData)
+        internal static void ConnectionToDB(ApiData apiData)
         {
             displayGames = ExecuteQuerySelect();
             writeGame = InsertQuery(apiData);
@@ -26,7 +27,7 @@ namespace DbConnector
             List<string> queryResults = new List<string>();
 
             //TODO Improvement - use an external file to store sensitive data
-            string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
@@ -55,7 +56,7 @@ namespace DbConnector
             List<string> queryResults = new List<string>();
             string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
 
-            string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
@@ -78,13 +79,13 @@ namespace DbConnector
             cmd.ExecuteNonQuery();
             
             return queryResults;
-        }
+         }
 
         //add in method parameter the data value of the form
         static private List<string> UpdateQuery(ApiData apiData)
         {
             List<string> queryResults = new List<string>();
-            string connString = "server=localhost;user=UserDBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
