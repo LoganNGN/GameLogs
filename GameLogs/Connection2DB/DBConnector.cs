@@ -10,15 +10,13 @@ namespace GameLogs.DbConnector
     internal class Program
     {
         //The collection of results
-        static List<string> writeGame = new List<string>();
         static List<string> displayGames = new List<string>();
-        static List<string> changeGameState = new List<string>();
 
-        internal static void ConnectionToDB(ApiData apiData)
+        internal static void ConnectionToDB()
         {
             displayGames = ExecuteQuerySelect();
-            writeGame = InsertQuery(apiData);
-            changeGameState = UpdateQuery(apiData);
+            InsertQuery();
+            UpdateQuery();
             
         }
 
@@ -51,9 +49,8 @@ namespace GameLogs.DbConnector
             return queryResults;
         }
 
-         static private List<string> InsertQuery(ApiData apiData)
+         static private void InsertQuery(ApiData apiData)
          {
-            List<string> queryResults = new List<string>();
             string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
 
             string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
@@ -77,14 +74,11 @@ namespace GameLogs.DbConnector
             //set and execute the query 
             MySqlCommand cmd = new MySqlCommand(insertQuery, connection);
             cmd.ExecuteNonQuery();
-            
-            return queryResults;
          }
 
         //add in method parameter the data value of the form
-        static private List<string> UpdateQuery(ApiData apiData)
+        static private void UpdateQuery(ApiData apiData)
         {
-            List<string> queryResults = new List<string>();
             string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
@@ -105,8 +99,6 @@ namespace GameLogs.DbConnector
             //set and execute the query 
             MySqlCommand cmd = new MySqlCommand(updateQuery, connection);
             cmd.ExecuteNonQuery();
-
-            return queryResults;
         }
     } 
 }
