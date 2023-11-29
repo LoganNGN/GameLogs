@@ -28,18 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Acceuil));
+            containGameDescription = new FlowLayoutPanel();
+            label1 = new Label();
+            imgGame = new PictureBox();
+            containGameDescription.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)imgGame).BeginInit();
             SuspendLayout();
+            // 
+            // containGameDescription
+            // 
+            containGameDescription.Anchor = AnchorStyles.None;
+            containGameDescription.BackColor = SystemColors.ActiveBorder;
+            containGameDescription.Controls.Add(imgGame);
+            containGameDescription.Controls.Add(label1);
+            containGameDescription.Location = new Point(27, 12);
+            containGameDescription.Name = "containGameDescription";
+            containGameDescription.Size = new Size(192, 113);
+            containGameDescription.TabIndex = 0;
+            containGameDescription.WrapContents = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            containGameDescription.SetFlowBreak(label1, true);
+            label1.Location = new Point(78, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 1;
+            label1.Text = "label1";
+            // 
+            // imgGame
+            // 
+            imgGame.Image = (Image)resources.GetObject("imgGame.Image");
+            imgGame.Location = new Point(3, 3);
+            imgGame.Name = "imgGame";
+            imgGame.Size = new Size(69, 69);
+            imgGame.SizeMode = PictureBoxSizeMode.Zoom;
+            imgGame.TabIndex = 1;
+            imgGame.TabStop = false;
             // 
             // Acceuil
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = Color.White;
             ClientSize = new Size(817, 482);
+            Controls.Add(containGameDescription);
             Name = "Acceuil";
             Text = "Acceuil";
+            Load += MainForm_SizeChanged;
+            containGameDescription.ResumeLayout(false);
+            containGameDescription.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)imgGame).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
+
+        private FlowLayoutPanel containGameDescription;
+        private PictureBox imgGame;
+        private Label label1;
     }
 }
