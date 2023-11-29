@@ -27,6 +27,8 @@ namespace GameLogs
             {
                 Console.WriteLine(displayGame);
             }
+            InsertQuery();
+            UpdateQuery();
         }
        
         static private List<string> ExecuteQuerySelect()
@@ -61,20 +63,26 @@ namespace GameLogs
         static private void InsertQuery(ApiData apiData)
         {
             string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
-
             string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
             connection.Open();
 
-            //prepare the query
+            //Conversion of json data as object
             var dataSet = JsonConvert.DeserializeObject<ApiData>(Json);
-            //TODO add value parameters
-            string insertQuery = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, @gameState );";
+
+            //prepare query
+            if(dataSet == null)
+            {
+                Console.WriteLine("Insert Query failed");
+            }
+            //gameState is set to false for test purpose's will be added later
+            string insertQuery = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, false );";
 
             //parameters
             //TODO figure out how to implement the bool gameState
+            //TODO figure out how to point and use the dictionary
             var args = new Dictionary<string, object>()
             {
                 {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}
