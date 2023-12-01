@@ -1,70 +1,80 @@
 ﻿using Newtonsoft.Json;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 internal class APIConnector
 {
     private readonly HttpClient client;
     private readonly string apiKey;
+    private readonly string basePath;
 
     public APIConnector()
     {
-        string apiKeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "apikey.txt");
+        basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs");
+        string apiKeyPath = Path.Combine(basePath, "apikey.txt");
         apiKey = File.ReadAllText(apiKeyPath);
         client = new HttpClient();
     }
+
     public class GameInfo
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string BackgroundImage { get; set; }
         public List<string> Screenshots { get; set; } = new List<string>();
+
+        public GameInfo(dynamic gameData)
+        {
+            Id = gameData.id;
+            Name = gameData.name;
+            Description = gameData.description;
+            BackgroundImage = gameData.background_image;
+        }
+
+        public void AddScreenshots(List<string> screenshots)
+        {
+            Screenshots = screenshots;
+        }
     }
 
     public async Task ProcessGames(string[] gameNames)
     {
         foreach (string gameName in gameNames)
         {
-            HttpResponseMessage response = await client.GetAsync($"https://api.rawg.io/api/games/{gameName}?key={apiKey}");
-            if (response.IsSuccessStatusCode)
+            var gameInfo = await GetGameInfo(gameName);
+            if (gameInfo != null)
             {
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                // Convert game data to JSON format
-                dynamic gameData = JsonConvert.DeserializeObject(responseBody);
-                GameInfo gameInfo = new GameInfo
-                {
-                    Id = gameData.id,
-                    Name = gameData.name,
-                    Description = gameData.description,
-                    Screenshots = new List<string>()
-                };
-
-                await RetrieveScreenshots(gameName, gameInfo);
-
-                string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
-
-                // Write JSON data to a file
-                string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "Results", $"{gameName}.json");
-                try
-                {
-                    using (StreamWriter writer = new StreamWriter(fileName))
-                    {
-                        writer.Write(jsonData);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error saving game data to file: {e.Message}");
-                    Console.WriteLine($"Stack trace: {e.StackTrace}");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"Game '{gameName}' does not exist");
+                await WriteToFile(gameName, gameInfo);
             }
         }
     }
 
-    private async Task RetrieveScreenshots(string gameName, dynamic gameInfo)
+    private async Task<GameInfo> GetGameInfo(string gameName)
+    {
+        HttpResponseMessage response = await client.GetAsync($"https://api.rawg.io/api/games/{gameName}?key={apiKey}");
+        if (response.IsSuccessStatusCode)
+        {
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            // Convert game data to JSON format
+            dynamic gameData = JsonConvert.DeserializeObject(responseBody);
+            GameInfo gameInfo = new GameInfo(gameData);
+
+            var screenshots = await RetrieveScreenshots(gameName);
+            gameInfo.AddScreenshots(screenshots);
+
+            return gameInfo;
+        }
+        else
+        {
+            Console.WriteLine($"Game '{gameName}' does not exist");
+            return null;
+        }
+    }
+
+    private async Task<List<string>> RetrieveScreenshots(string gameName)
     {
         HttpResponseMessage screenshotResponse = await client.GetAsync($"https://api.rawg.io/api/games/{gameName}/screenshots?key={apiKey}");
         if (screenshotResponse.IsSuccessStatusCode)
@@ -83,16 +93,32 @@ internal class APIConnector
                 {
                     screenshotUrls.Add(screenshot.image.ToString());
                     count++;
-                    await Task.Delay(1000);
                 }
             }
 
-            // Update gameInfo with screenshot URLs
-            gameInfo.Screenshots = screenshotUrls;
+            return screenshotUrls;
         }
         else
         {
             Console.WriteLine($"Failed to retrieve screenshots for game '{gameName}'");
+            return new List<string>();
+        }
+    }
+
+    private async Task WriteToFile(string gameName, GameInfo gameInfo)
+    {
+        string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
+
+        // Write JSON data to a file
+        string fileName = Path.Combine(basePath, "Results", $"{gameName}.json");
+        try
+        {
+            await File.WriteAllTextAsync(fileName, jsonData);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error saving game data to file: {e.Message}");
+            Console.WriteLine($"Stack trace: {e.StackTrace}");
         }
     }
 }
