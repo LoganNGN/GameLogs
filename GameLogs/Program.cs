@@ -75,17 +75,17 @@ namespace GameLogs
             //prepare query
             if(dataSet == null)
             {
-                Console.WriteLine("Insert Query failed");
+                Console.WriteLine("Unable to convert Json");
             }
             //gameState is set to false for test purpose's will be added later
-            string insertQuery = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, false );";
+            string insertQuery = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, @gameState );";
 
             //parameters
             //TODO figure out how to implement the bool gameState
             //TODO figure out how to point and use the dictionary
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}
+                {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}, {"@gameState", apiData.GameState}
             };
 
             //set and execute the query 

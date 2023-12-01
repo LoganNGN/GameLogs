@@ -9,23 +9,36 @@ namespace GameLogs.DbConnector
 {
     internal class Program
     {
-        //The collection of results
-        static List<string> displayGames = new List<string>();
-
-        internal static void ConnectionToDB()
+        private int ExecuteWrite(string query, Dictionary<string, object> args)
         {
-            displayGames = ExecuteQuerySelect();
-            InsertQuery();
-            UpdateQuery();
-            
+            int numberOfRowsAffected;
+            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+            //setup the connection to the database
+            using (var con = new MySqlConnection(connString)
+            {
+                con.Open();
+                //open a new command
+                using (var cmd = new MySqlCommand(query, con))
+                {
+                    //set the arguments given in the query
+                    foreach (var pair in args)
+                    {
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                    }
+                    //execute the query and get the number of row affected
+                    numberOfRowsAffected = cmd.ExecuteNonQuery();
+                }
+                return numberOfRowsAffected;
+            }
         }
+    }
 
         static private List<string> ExecuteQuerySelect()
         {
             List<string> queryResults = new List<string>();
 
             //TODO Improvement - use an external file to store sensitive data
-            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+            
 
             //prepare the connection
             MySqlConnection connection = new MySqlConnection(connString);
@@ -52,12 +65,6 @@ namespace GameLogs.DbConnector
          static private void InsertQuery(ApiData apiData)
          {
             string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
-
-            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
-
-            //prepare the connection
-            MySqlConnection connection = new MySqlConnection(connString);
-            connection.Open();
 
             //prepare the query
             var dataSet = JsonConvert.DeserializeObject<ApiData>( Json );
