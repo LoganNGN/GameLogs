@@ -1,3 +1,4 @@
+using System.Data;
 using GameLogs.apiDataCollection;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
@@ -10,19 +11,19 @@ namespace GameLogs
         ///  The main entry point for the application.
         /// </summary>
 
-        //The collection of results
+        private static ApiData apiData;
+        
 
         [STAThread]
-        static void Main(ApiData apiData)
+        static void Main()
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
             InsertQuery(apiData);
-            UpdateQuery(apiData);
         }
-
+       
         private static int ExecuteWrite(string query, Dictionary<string, object> args)
         {
             int numberOfRowsAffected;
@@ -43,16 +44,17 @@ namespace GameLogs
                     numberOfRowsAffected = cmd.ExecuteNonQuery();
                 }
                 return numberOfRowsAffected;
-            }
+            }          
         }
 
         private static int InsertQuery(ApiData apiData)
         {
             //TODO make the json a txt file
-            string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
+            string fileName = "fortnite.json";
+            string Json = File.ReadAllText(fileName);
 
             //prepare the query
-            var dataSet = JsonConvert.DeserializeObject<ApiData>(Json);
+            JsonConvert.DeserializeObject<ApiData>(Json);
             //TODO add value parameters
             string query = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, @gameState );";
 
@@ -81,5 +83,5 @@ namespace GameLogs
             };
             return ExecuteWrite(query, args);
         }
-    }
+    }  
 }
