@@ -11,111 +11,75 @@ namespace GameLogs
         /// </summary>
 
         //The collection of results
-        static List<string> displayGames = new List<string>();
 
         [STAThread]
-        static void Main()
+        static void Main(ApiData apiData)
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-
-            //display the query
-            displayGames = ExecuteQuerySelect();
-            foreach (string displayGame in displayGames)
-            {
-                Console.WriteLine(displayGame);
-            }
-            InsertQuery();
-            UpdateQuery();
+            InsertQuery(apiData);
+            UpdateQuery(apiData);
         }
-       
-        static private List<string> ExecuteQuerySelect()
+
+        private static int ExecuteWrite(string query, Dictionary<string, object> args)
         {
-            List<string> queryResults = new List<string>();
-
-            //TODO Improvement - use an external file to store sensitive data
+            int numberOfRowsAffected;
             string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+            //setup the connection to the database
+            using (var con = new MySqlConnection(connString))
+            {
+                con.Open();
+                //open a new command
+                using (var cmd = new MySqlCommand(query, con))
+                {
+                    //set the arguments given in the query
+                    foreach (var pair in args)
+                    {
+                        cmd.Parameters.AddWithValue(pair.Key, pair.Value);
+                    }
+                    //execute the query and get the number of row affected
+                    numberOfRowsAffected = cmd.ExecuteNonQuery();
+                }
+                return numberOfRowsAffected;
+            }
+        }
 
-            //prepare the connection
-            MySqlConnection connection = new MySqlConnection(connString);
-            connection.Open();
+        private static int InsertQuery(ApiData apiData)
+        {
+            //TODO make the json a txt file
+            string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
 
             //prepare the query
-            string query = "SELECT name, releaseDate, image, description, gameState FROM Game;";
-
-            //set and execute the query 
-            MySqlCommand cmd = new MySqlCommand(query, connection);
-            cmd.ExecuteNonQuery();
-
-            //retrieve values
-            MySqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                //TODO Improvement - how to extract multiple fields ?
-                //TODO Improvement - how deal with numeric values ?
-                queryResults.Add(reader.GetString(0) + " - " + reader.GetString(1));
-            }
-            return queryResults;
-        }
-
-        static private void InsertQuery(ApiData apiData)
-        {
-            string Json = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\docs\\fortnite.json";
-            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
-
-            //prepare the connection
-            MySqlConnection connection = new MySqlConnection(connString);
-            connection.Open();
-
-            //Conversion of json data as object
             var dataSet = JsonConvert.DeserializeObject<ApiData>(Json);
-
-            //prepare query
-            if(dataSet == null)
-            {
-                Console.WriteLine("Unable to convert Json");
-            }
-            //gameState is set to false for test purpose's will be added later
-            string insertQuery = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, @gameState );";
+            //TODO add value parameters
+            string query = "INSERT INTO Game (id, name, description, image, gameState)" + " VALUES(@id, @name, @description, @image, @gameState );";
 
             //parameters
             //TODO figure out how to implement the bool gameState
-            //TODO figure out how to point and use the dictionary
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}, {"@gameState", apiData.GameState}
+                {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}
             };
 
-            //set and execute the query 
-            MySqlCommand cmd = new MySqlCommand(insertQuery, connection);
-            cmd.ExecuteNonQuery();
+            return ExecuteWrite(query, args);
         }
 
         //add in method parameter the data value of the form
-        static private void UpdateQuery(ApiData apiData)
+        private static int UpdateQuery(ApiData apiData)
         {
-            string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
-
-            //prepare the connection
-            MySqlConnection connection = new MySqlConnection(connString);
-            connection.Open();
-
             //prepare the query
             //TODO switch case statement for when we want to update the state of the game (todo or finished)
             //TODO add value parameters
-            const string updateQuery = "UPDATE INTO Game SET gameState = 'False' WHERE id = '@id';";
+            string query = "UPDATE INTO Game SET gameState = 'False' WHERE id = '@id';";
 
             //parameter
             var args = new Dictionary<string, object>()
             {
                 {"@id", apiData.id }
             };
-
-            //set and execute the query 
-            MySqlCommand cmd = new MySqlCommand(updateQuery, connection);
-            cmd.ExecuteNonQuery();
+            return ExecuteWrite(query, args);
         }
     }
 }
