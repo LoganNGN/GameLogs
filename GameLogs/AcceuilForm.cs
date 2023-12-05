@@ -86,12 +86,34 @@ namespace GameLogs
 
     public class GameContainer : Panel
     {
+        private string _imagePath = Path.Combine(Environment.CurrentDirectory, "imgTestRobot.jpg");
+        private Size _imageSize = new Size(200, 100);
+
+
         public PictureBox GameImage { get; }
         public Label DescriptionLabel { get; }
 
         // Ajoutez ces propriétés pour le chemin et la taille de l'image
-        public string ImagePath { get; set; }
-        public Size ImageSize { get; set; }
+        public string ImagePath {
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                _imagePath = value;
+            }
+        }
+        public Size ImageSize {
+            get
+            {
+                return GameImage.Size;
+            }
+            set
+            {
+                _imageSize = value;
+            }
+        }
 
         public GameContainer()
         {
