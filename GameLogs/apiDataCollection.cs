@@ -9,21 +9,28 @@ namespace GameLogs.apiDataCollection
 {
     public class ApiData
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public string image { get; set; }
-        //GameState returns false for teste purposes
-        public bool GameState 
+        private int _id;
+        private string _name;
+        private string _description;
+        private string _image;
+        private string _gameState;
+
+        public ApiData(int id ,string name, string description, string image, string GameState)
         {
-            get
-            {
-                return this.GameState;
-            }            
-            set 
-            { 
-                GameState = false; 
-            } 
+            _id = id;
+            _name = name;
+            _description = description;
+            _image = image;
+            _gameState = GameState;
         }
+
+        public int Id { get; set; }
+        public string Name { get; set; }       
+        public string Description { get; set; }
+        public string Image { get; set; }
+        //GameState returns false for teste purposes
+        public string GameState { get; set; }
+        
     }
+
 }

@@ -11,7 +11,7 @@ namespace GameLogs
         ///  The main entry point for the application.
         /// </summary>
 
-        private static ApiData apiData;
+        private static ApiData ApiData;
         
 
         [STAThread]
@@ -21,7 +21,7 @@ namespace GameLogs
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-            InsertQuery(apiData);
+            InsertQuery(ApiData);
         }
        
         private static int ExecuteWrite(string query, Dictionary<string, object> args)
@@ -47,10 +47,10 @@ namespace GameLogs
             }          
         }
 
+        #region CRUD
         private static int InsertQuery(ApiData apiData)
         {
-            //TODO make the json a txt file
-            string fileName = "fortnite.json";
+            string fileName = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\apiDataJson.txt";
             string Json = File.ReadAllText(fileName);
 
             //prepare the query
@@ -62,7 +62,7 @@ namespace GameLogs
             //TODO figure out how to implement the bool gameState
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.id}, {"@name", apiData.name}, {"@description", apiData.description}, {"@image", apiData.image}
+                {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
             };
 
             return ExecuteWrite(query, args);
@@ -79,9 +79,12 @@ namespace GameLogs
             //parameter
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.id }
+                {"@id", apiData.Id }
             };
             return ExecuteWrite(query, args);
         }
-    }  
+
+
+        #endregion
+    }
 }
