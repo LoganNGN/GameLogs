@@ -50,7 +50,7 @@ namespace GameLogs
         #region CRUD
         private static int InsertQuery(ApiData apiData)
         {
-            string fileName = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\apiDataJson.txt";
+            string fileName = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\fortnite.json";
             string Json = File.ReadAllText(fileName);
 
             //prepare the query

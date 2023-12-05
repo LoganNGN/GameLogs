@@ -9,19 +9,19 @@ namespace GameLogs.apiDataCollection
 {
     public class ApiData
     {
-        private int _id;
-        private string _name;
-        private string _description;
-        private string _image;
-        private string _gameState;
+        private int id;
+        private string name;
+        private string description;
+        private string image;
+        private string gameState;
 
         public ApiData(int id ,string name, string description, string image, string GameState)
         {
-            _id = id;
-            _name = name;
-            _description = description;
-            _image = image;
-            _gameState = GameState;
+            this.Id = id;
+            this.Name = name;
+            this.Description = description;
+            this.Image = image;
+            this.GameState = GameState;
         }
 
         public int Id { get; set; }
