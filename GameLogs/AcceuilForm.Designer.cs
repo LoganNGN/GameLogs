@@ -28,67 +28,92 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Acceuil));
-            containGameDescription = new FlowLayoutPanel();
-            label1 = new Label();
-            imgGame = new PictureBox();
-            containGameDescription.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)imgGame).BeginInit();
+            gbGame = new GroupBox();
+            lbTitle = new Label();
+            btmDescriptionVoir = new Button();
+            tbRecherche = new TextBox();
+            btmRecherche = new Button();
+            gbGame.SuspendLayout();
             SuspendLayout();
             // 
-            // containGameDescription
+            // gbGame
             // 
-            containGameDescription.Anchor = AnchorStyles.None;
-            containGameDescription.BackColor = SystemColors.ActiveBorder;
-            containGameDescription.Controls.Add(imgGame);
-            containGameDescription.Controls.Add(label1);
-            containGameDescription.Location = new Point(27, 12);
-            containGameDescription.Name = "containGameDescription";
-            containGameDescription.Size = new Size(192, 113);
-            containGameDescription.TabIndex = 0;
-            containGameDescription.WrapContents = false;
+            gbGame.Controls.Add(lbTitle);
+            gbGame.Controls.Add(btmDescriptionVoir);
+            gbGame.FlatStyle = FlatStyle.Flat;
+            gbGame.Location = new Point(1, 81);
+            gbGame.Name = "gbGame";
+            gbGame.Size = new Size(822, 56);
+            gbGame.TabIndex = 0;
+            gbGame.TabStop = false;
+            gbGame.Visible = false;
             // 
-            // label1
+            // lbTitle
             // 
-            label1.AutoSize = true;
-            containGameDescription.SetFlowBreak(label1, true);
-            label1.Location = new Point(78, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 1;
-            label1.Text = "label1";
+            lbTitle.AutoSize = true;
+            lbTitle.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lbTitle.Location = new Point(12, 18);
+            lbTitle.Name = "lbTitle";
+            lbTitle.Size = new Size(45, 25);
+            lbTitle.TabIndex = 1;
+            lbTitle.Text = "Nya";
             // 
-            // imgGame
+            // btmDescriptionVoir
             // 
-            imgGame.Image = (Image)resources.GetObject("imgGame.Image");
-            imgGame.Location = new Point(3, 3);
-            imgGame.Name = "imgGame";
-            imgGame.Size = new Size(69, 69);
-            imgGame.SizeMode = PictureBoxSizeMode.Zoom;
-            imgGame.TabIndex = 1;
-            imgGame.TabStop = false;
+            btmDescriptionVoir.BackColor = Color.Snow;
+            btmDescriptionVoir.Location = new Point(722, 22);
+            btmDescriptionVoir.Name = "btmDescriptionVoir";
+            btmDescriptionVoir.Size = new Size(75, 23);
+            btmDescriptionVoir.TabIndex = 0;
+            btmDescriptionVoir.Text = "Voir";
+            btmDescriptionVoir.UseVisualStyleBackColor = false;
+            btmDescriptionVoir.Click += btmDescription_Click;
+            // 
+            // tbRecherche
+            // 
+            tbRecherche.BackColor = SystemColors.Info;
+            tbRecherche.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            tbRecherche.Location = new Point(405, 30);
+            tbRecherche.Name = "tbRecherche";
+            tbRecherche.Size = new Size(204, 29);
+            tbRecherche.TabIndex = 1;
+            // 
+            // btmRecherche
+            // 
+            btmRecherche.BackColor = Color.Snow;
+            btmRecherche.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            btmRecherche.Location = new Point(615, 30);
+            btmRecherche.Name = "btmRecherche";
+            btmRecherche.Size = new Size(116, 29);
+            btmRecherche.TabIndex = 2;
+            btmRecherche.Text = "Recherche";
+            btmRecherche.UseVisualStyleBackColor = false;
+            btmRecherche.Click += btmRecherche_Click;
             // 
             // Acceuil
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
+            AutoSize = true;
             BackColor = Color.White;
-            ClientSize = new Size(817, 482);
-            Controls.Add(containGameDescription);
+            ClientSize = new Size(821, 482);
+            Controls.Add(btmRecherche);
+            Controls.Add(tbRecherche);
+            Controls.Add(gbGame);
             Name = "Acceuil";
             Text = "Acceuil";
-            Load += MainForm_SizeChanged;
-            containGameDescription.ResumeLayout(false);
-            containGameDescription.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)imgGame).EndInit();
+            gbGame.ResumeLayout(false);
+            gbGame.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private FlowLayoutPanel containGameDescription;
-        private PictureBox imgGame;
-        private Label label1;
+        private GroupBox gbGame;
+        private Button btmDescriptionVoir;
+        private Label lbTitle;
+        private TextBox tbRecherche;
+        private Button btmRecherche;
     }
 }
