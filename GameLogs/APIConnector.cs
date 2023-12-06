@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RawgNET.Models;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -46,7 +47,7 @@ internal class APIConnector
             var gameInfo = await GetGameInfo(gameName);
             if (gameInfo != null)
             {
-                await WriteToFile(gameName, gameInfo);
+                await WriteToFile(gameName, gameInfo, "Games");
             }
         }
     }
@@ -105,9 +106,21 @@ internal class APIConnector
         }
     }
 
-    private async Task WriteToFile(string gameName, GameInfo gameInfo)
+
+    private async Task WriteToFile(string gameName, GameInfo gameInfo, string tableName)
     {
-        string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
+        // Create a dictionary to store the game data
+        Dictionary<string, object> gameData = new Dictionary<string, object>()
+    {
+        {"tableName", tableName },
+        { "Id", gameInfo.Id },
+        { "Name", gameInfo.Name },
+        { "Description", gameInfo.Description },
+        { "BackgroundImage", gameInfo.BackgroundImage }
+    };
+
+        // Convert the dictionary to JSON format
+        string jsonData = JsonConvert.SerializeObject(gameData, Formatting.Indented);
 
         // Write JSON data to a file
         string fileName = Path.Combine(basePath, "Results", $"{gameName}.json");
