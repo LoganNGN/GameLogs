@@ -9,11 +9,6 @@ namespace GameLogs.apiDataCollection
 {
     public class apiData
     {
-        private int id;
-        private string name;
-        private string description;
-        private string image;
-
         public apiData(int id ,string name, string description, string image)
         {
             Id = id;

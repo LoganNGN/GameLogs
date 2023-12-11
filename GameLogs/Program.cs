@@ -1,7 +1,6 @@
 using System.Data;
 using GameLogs.apiDataCollection;
 using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
 
 namespace GameLogs
 {
@@ -21,6 +20,7 @@ namespace GameLogs
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+            SelectAllQuery();
             InsertQuery(apiData);
         }
         #region DataBase execute Methods
@@ -50,12 +50,10 @@ namespace GameLogs
         private static DataTable ExecuteRead(string query, Dictionary<string, object> args)
         {
             string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
-
             if (string.IsNullOrEmpty(query.Trim()))
             {
                 return null;
-            }
-            
+            }         
             using (var con = new MySqlConnection(connString))
             {
                 con.Open();
@@ -73,32 +71,77 @@ namespace GameLogs
                 }
             }
         }
-        #endregion
-        #region CRUD
+        //private static List<string> SelectAllQuery()
+        //{
+        //    List<string> queryResults = new List<string>();
+
+        //    string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
+        //    var query = "SELECT * FROM Game";
+        //    using (var con = new MySqlConnection(connString))
+        //    {
+        //        con.Open();
+        //        //open a new command
+        //        using (var cmd = new MySqlCommand(query, con))
+        //        {
+        //            cmd.ExecuteNonQuery();
+        //            //retrieve values
+        //            MySqlDataReader reader = cmd.ExecuteReader();
+        //            while (reader.Read())
+        //            {
+        //                //TODO Improvement - how to extract multiple fields ?
+        //                //TODO Improvement - how deal with numeric values ?
+        //                queryResults.Add(reader.GetString(0) + " - " + reader.GetString(1));
+        //                queryResults.ToString();
+        //            }
+        //            return queryResults;
+        //        }
+        //    }
+        //}
+            #endregion
+            #region CRUD
         private static int InsertQuery(apiData apiData)
         {
-            string fileName = "C:\\Users\\pb34nwq\\source\\repos\\GameLogs\\GameLogs\\fortnite.json";
-            string Json = File.ReadAllText(fileName);
+            //TODO when sven finishes the json deserialiser and gives me the files insert the path to the file for the query
 
             //prepare the query
-            JsonConvert.DeserializeObject<apiData>(Json);
             string query = "INSERT INTO Game (id, name, description, image)" + " VALUES(@id, @name, @description, @image);";
-
             //parameters
             var args = new Dictionary<string, object>()
             {
                 {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
             };
-
             return ExecuteWrite(query, args);
         }
 
-        private static apiData SelectQuery()
+        //method for the researche bar
+        private static apiData SelectGameByName(string name)
         {
-            var query = "SELECT * FROM Game";
+            var query = "SELECT * FROM Game WHERE name = @name";
             var args = new Dictionary<string, object>
             {
-                //{"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
+                {"name", name}
+            };
+            DataTable dt = ExecuteRead(query, args);
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            var apiData = new apiData
+            {
+                Id = Convert.ToInt32(dt.Rows[0]["Id"]),
+                Name = Convert.ToString(dt.Rows[0]["Name"]),
+                Description = Convert.ToString(dt.Rows[0]["Description"]),
+                Image = Convert.ToString(dt.Rows[0]["Image"])
+            };
+            return apiData;
+        }
+
+        private static apiData SelectAllQuery()
+        {
+            var query = "SELECT * FROM Game";
+            var args = new Dictionary<string, object>()
+            {
+                {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
             };
             DataTable dt = ExecuteRead(query, args);
             if (dt == null || dt.Rows.Count == 0)
