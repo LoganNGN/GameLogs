@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
-using RawgNET.Models;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Drawing.Text;
 
 internal class APIConnector
 {
     private readonly HttpClient client;
     private readonly string apiKey;
     private readonly string basePath;
-
     public APIConnector()
     {
         basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs");
@@ -39,6 +35,20 @@ internal class APIConnector
             Screenshots = screenshots;
         }
     }
+    public Dictionary<string, object> GetGameData(GameInfo gameinfo, string tableName)
+    {
+        // Create a dictionary to store the game data
+        Dictionary<string, object> gameData = new Dictionary<string, object>()
+            {
+                {"tableName", tableName},
+                { "Id", gameinfo.Id },
+                { "Name", gameinfo.Name },
+                { "Description", gameinfo.Description },
+                { "BackgroundImage", gameinfo.BackgroundImage }
+            };
+
+        return gameData;
+    }
 
     public async Task ProcessGames(string[] gameNames)
     {
@@ -47,8 +57,10 @@ internal class APIConnector
             var gameInfo = await GetGameInfo(gameName);
             if (gameInfo != null)
             {
+                Dictionary<string, object> gameData = GetGameData(gameInfo, "Games");
+
                 await WriteToFile(gameName, gameInfo, "Games");
-            }
+            } 
         }
     }
 
@@ -107,22 +119,10 @@ internal class APIConnector
     }
 
 
-    private async Task WriteToFile(string gameName, GameInfo gameInfo, string tableName)
+    private async Task WriteToFile(string gameName, GameInfo gameInfo)
     {
-        // Create a dictionary to store the game data
-        Dictionary<string, object> gameData = new Dictionary<string, object>()
-    {
-        {"tableName", tableName },
-        { "Id", gameInfo.Id },
-        { "Name", gameInfo.Name },
-        { "Description", gameInfo.Description },
-        { "BackgroundImage", gameInfo.BackgroundImage }
-    };
+        string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
 
-        // Convert the dictionary to JSON format
-        string jsonData = JsonConvert.SerializeObject(gameData, Formatting.Indented);
-
-        // Write JSON data to a file
         string fileName = Path.Combine(basePath, "Results", $"{gameName}.json");
         try
         {
