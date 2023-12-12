@@ -7,21 +7,23 @@ using System.Threading.Tasks;
 
 namespace GameLogs.apiDataCollection
 {
-    public class apiData
+    public class ApiData
     {
-        public apiData(int id ,string name, string description, string image)
+        public ApiData()
         {
-            Id = id;
-            Name = name;
-            Description = description;
-            Image = image;
+            //values for tests purposes
+            Id = 1;
+            Name = "YuGiOh";
+            Description = "Table Card Game";
+            Image = "Link2Image";
         }
 
         public int Id { get; set; }
-        public string Name { get; set; }       
+        public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        
+
+
     }
 
 }

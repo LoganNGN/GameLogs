@@ -10,8 +10,7 @@ namespace GameLogs
         ///  The main entry point for the application.
         /// </summary>
 
-        private static apiData apiData;
-        
+        private static ApiData apiData = new ApiData();
 
         [STAThread]
         static void Main()
@@ -20,7 +19,7 @@ namespace GameLogs
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-            SelectAllQuery();
+            //SelectAllQuery();
             InsertQuery(apiData);
         }
         #region DataBase execute Methods
@@ -70,36 +69,10 @@ namespace GameLogs
                     return dt;
                 }
             }
-        }
-        //private static List<string> SelectAllQuery()
-        //{
-        //    List<string> queryResults = new List<string>();
-
-        //    string connString = "server=localhost;user=DBGameLogs;database=mydb;port=3306;password=Pa$$W0rd;";
-        //    var query = "SELECT * FROM Game";
-        //    using (var con = new MySqlConnection(connString))
-        //    {
-        //        con.Open();
-        //        //open a new command
-        //        using (var cmd = new MySqlCommand(query, con))
-        //        {
-        //            cmd.ExecuteNonQuery();
-        //            //retrieve values
-        //            MySqlDataReader reader = cmd.ExecuteReader();
-        //            while (reader.Read())
-        //            {
-        //                //TODO Improvement - how to extract multiple fields ?
-        //                //TODO Improvement - how deal with numeric values ?
-        //                queryResults.Add(reader.GetString(0) + " - " + reader.GetString(1));
-        //                queryResults.ToString();
-        //            }
-        //            return queryResults;
-        //        }
-        //    }
-        //}
-            #endregion
-            #region CRUD
-        private static int InsertQuery(apiData apiData)
+        }       
+        #endregion
+        #region CRUD
+        private static int InsertQuery(ApiData apiData)
         {
             //TODO when sven finishes the json deserialiser and gives me the files insert the path to the file for the query
 
@@ -114,19 +87,19 @@ namespace GameLogs
         }
 
         //method for the researche bar
-        private static apiData SelectGameByName(string name)
+        private static ApiData SelectGameByName(string name)
         {
             var query = "SELECT * FROM Game WHERE name = @name";
             var args = new Dictionary<string, object>
             {
-                {"name", name}
+                {"@name", name}
             };
             DataTable dt = ExecuteRead(query, args);
             if (dt == null || dt.Rows.Count == 0)
             {
                 return null;
             }
-            var apiData = new apiData
+            var apiData = new ApiData
             {
                 Id = Convert.ToInt32(dt.Rows[0]["Id"]),
                 Name = Convert.ToString(dt.Rows[0]["Name"]),
@@ -136,19 +109,19 @@ namespace GameLogs
             return apiData;
         }
 
-        private static apiData SelectAllQuery()
+        private static ApiData SelectAllQuery()
         {
             var query = "SELECT * FROM Game";
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
+               // {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
             };
             DataTable dt = ExecuteRead(query, args);
             if (dt == null || dt.Rows.Count == 0)
             {
                 return null;
             }
-            var apiData = new apiData
+            var apiData = new ApiData
             {
                 Id = Convert.ToInt32(dt.Rows[0]["Id"]),
                 Name = Convert.ToString(dt.Rows[0]["Name"]),
