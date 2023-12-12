@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Drawing.Text;
 
 internal class APIConnector
 {
@@ -37,7 +36,6 @@ internal class APIConnector
     }
     public Dictionary<string, object> GetGameData(GameInfo gameinfo, string tableName)
     {
-        // Create a dictionary to store the game data
         Dictionary<string, object> gameData = new Dictionary<string, object>()
             {
                 {"tableName", tableName},
@@ -59,7 +57,7 @@ internal class APIConnector
             {
                 Dictionary<string, object> gameData = GetGameData(gameInfo, "Games");
 
-                await WriteToFile(gameName, gameInfo, "Games");
+                await WriteToFile(gameName, gameInfo);
             } 
         }
     }
@@ -71,7 +69,6 @@ internal class APIConnector
         {
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            // Convert game data to JSON format
             dynamic gameData = JsonConvert.DeserializeObject(responseBody);
             GameInfo gameInfo = new GameInfo(gameData);
 
@@ -94,10 +91,8 @@ internal class APIConnector
         {
             string screenshotResponseBody = await screenshotResponse.Content.ReadAsStringAsync();
 
-            // Convert screenshot data to JSON format
             dynamic screenshotData = JsonConvert.DeserializeObject(screenshotResponseBody);
 
-            // Extract screenshot URLs and convert them to strings
             List<string> screenshotUrls = new List<string>();
             int count = 0;
             foreach (dynamic screenshot in screenshotData.results)
