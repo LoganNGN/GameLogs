@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace GameLogs
-{
+{ //liste pour tester l'affichage utilisateur
     /// <summary>
     /// This class is designed to manage a Contact
     /// </summary>

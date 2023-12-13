@@ -37,7 +37,7 @@
             // imgGame
             // 
             imgGame.Image = Properties.Resources.imgTestRobot;
-            imgGame.Location = new Point(12, 12);
+            imgGame.Location = new Point(12, 53);
             imgGame.Name = "imgGame";
             imgGame.Size = new Size(297, 320);
             imgGame.SizeMode = PictureBoxSizeMode.Zoom;
@@ -49,28 +49,32 @@
             // 
             lbTitle.AutoSize = true;
             lbTitle.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
+            lbTitle.ForeColor = Color.White;
             lbTitle.Location = new Point(337, 53);
             lbTitle.Name = "lbTitle";
             lbTitle.Size = new Size(68, 40);
             lbTitle.TabIndex = 1;
             lbTitle.Text = "Nya";
+            lbTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // lbDescription
             // 
             lbDescription.AutoSize = true;
             lbDescription.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            lbDescription.Location = new Point(346, 105);
+            lbDescription.ForeColor = Color.White;
+            lbDescription.Location = new Point(337, 103);
             lbDescription.MaximumSize = new Size(300, 0);
             lbDescription.Name = "lbDescription";
-            lbDescription.Size = new Size(33, 40);
+            lbDescription.Size = new Size(297, 60);
             lbDescription.TabIndex = 2;
-            lbDescription.Text = "test\r\nn\r\n";
+            lbDescription.Text = "test--------------------------------------------------------\r\nn\r\n";
             lbDescription.UseMnemonic = false;
             // 
             // descriptionGame
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Black;
             ClientSize = new Size(800, 450);
             Controls.Add(lbDescription);
             Controls.Add(lbTitle);

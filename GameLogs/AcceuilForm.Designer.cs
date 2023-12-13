@@ -52,6 +52,7 @@
             // 
             lbTitle.AutoSize = true;
             lbTitle.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            lbTitle.ForeColor = Color.White;
             lbTitle.Location = new Point(12, 18);
             lbTitle.Name = "lbTitle";
             lbTitle.Size = new Size(45, 25);
@@ -96,7 +97,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
             AutoSize = true;
-            BackColor = Color.White;
+            BackColor = Color.Black;
             ClientSize = new Size(821, 482);
             Controls.Add(btmRecherche);
             Controls.Add(tbRecherche);
