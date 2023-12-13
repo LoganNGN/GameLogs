@@ -20,7 +20,7 @@ internal class APIConnector
         public string Description { get; set; }
         public string BackgroundImage { get; set; }
         public List<string> Screenshots { get; set; } = new List<string>();
-
+         
         public GameInfo(dynamic gameData)
         {
             Id = gameData.id;
@@ -79,8 +79,7 @@ internal class APIConnector
         }
         else
         {
-            Console.WriteLine($"Game '{gameName}' does not exist");
-            return null;
+            throw new GameNotFoundException($"Game '{gameName}' does not exist");
         }
     }
 
@@ -108,8 +107,7 @@ internal class APIConnector
         }
         else
         {
-            Console.WriteLine($"Failed to retrieve screenshots for game '{gameName}'");
-            return new List<string>();
+            throw new ScreenshotRetrievalException($"Failed to retrieve screenshots for game '{gameName}'");
         }
     }
 
@@ -125,8 +123,25 @@ internal class APIConnector
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error saving game data to file: {e.Message}");
-            Console.WriteLine($"Stack trace: {e.StackTrace}");
+            throw new WriteInFileException($"Error Writing data to gameFile: {e.Message}", e);
         }
     }
+
+    #region public attributes
+    public class GameNotFoundException : Exception
+    {
+        public GameNotFoundException(string message) : base(message) { }
+    }
+
+    public class ScreenshotRetrievalException : Exception
+    {
+        public ScreenshotRetrievalException(string message) : base(message) { }
+    }
+
+    public class WriteInFileException : Exception
+    {
+        public WriteInFileException(string message, Exception innerException) : base(message, innerException) { }
+    }
+
+    #endregion public attributes
 }
