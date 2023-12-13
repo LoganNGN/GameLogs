@@ -1,6 +1,9 @@
 using System.Data;
 using GameLogs.apiDataCollection;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Relational;
+using System;
+using System.Collections.Generic;
 
 namespace GameLogs
 {
@@ -19,7 +22,7 @@ namespace GameLogs
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-            //SelectAllQuery();
+            SelectAllQuery();
             InsertQuery(apiData);
         }
         #region DataBase execute Methods
@@ -52,7 +55,7 @@ namespace GameLogs
             if (string.IsNullOrEmpty(query.Trim()))
             {
                 return null;
-            }         
+            }
             using (var con = new MySqlConnection(connString))
             {
                 con.Open();
@@ -65,16 +68,16 @@ namespace GameLogs
                     var da = new MySqlDataAdapter(cmd);
                     var dt = new DataTable();
                     da.Fill(dt);
-                    da.Dispose();
+                    da.Dispose();                   
                     return dt;
-                }
+                }                
             }
         }       
         #endregion
         #region CRUD
         private static int InsertQuery(ApiData apiData)
         {
-            //TODO when sven finishes the json deserialiser and gives me the files insert the path to the file for the query
+            //TODO when sven finishes the json deserialiser and gives me the files, insert the path to the file for the query
 
             //prepare the query
             string query = "INSERT INTO Game (id, name, description, image)" + " VALUES(@id, @name, @description, @image);";
@@ -105,7 +108,7 @@ namespace GameLogs
                 Name = Convert.ToString(dt.Rows[0]["Name"]),
                 Description = Convert.ToString(dt.Rows[0]["Description"]),
                 Image = Convert.ToString(dt.Rows[0]["Image"])
-            };
+            };    
             return apiData;
         }
 
@@ -114,11 +117,12 @@ namespace GameLogs
             var query = "SELECT * FROM Game";
             var args = new Dictionary<string, object>()
             {
-               // {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
+               //no parameters needed
             };
             DataTable dt = ExecuteRead(query, args);
             if (dt == null || dt.Rows.Count == 0)
             {
+                Console.WriteLine("empty");
                 return null;
             }
             var apiData = new ApiData
@@ -131,30 +135,29 @@ namespace GameLogs
             return apiData;
         }
 
-        //private static int UpdateQuery(apiData apiData)
-        //{
-        //    //prepare the query
-        //    //TODO switch case statement for when we want to update the state of the game (todo or finished)
-        //    //TODO add value parameters
-        //    string query = "UPDATE INTO Game SET gameState = 'False' WHERE id = '@id';";
+        private static int UpdateQuery(ApiData apiData)
+        {
+            //prepare the query
+            //change query if needed
+            string query = "UPDATE INTO Game SET xxxx = 'xxxx' WHERE id = '@id';";
 
-        //    //parameter
-        //    var args = new Dictionary<string, object>()
-        //    {
-        //        {"@id", apiData.Id }
-        //    };
-        //    return ExecuteWrite(query, args);
-        //}
+            //parameter
+            var args = new Dictionary<string, object>()
+            {
+                {"@id", apiData.Id }
+            };
+            return ExecuteWrite(query, args);
+        }
 
-        //private static int DeleteQuery(apiData apiData)
-        //{
-        //    const string query = "Delete from User WHERE Id = @id";
-        //    var args = new Dictionary<string, object>
-        //    {
-        //        {"@id", apiData.Id}
-        //    };
-        //    return ExecuteWrite(query, args);
-        //}
+        private static int DeleteQuery(ApiData apiData)
+        {
+            const string query = "Delete from Game WHERE Id = @id";
+            var args = new Dictionary<string, object>
+            {
+                {"@id", apiData.Id}
+            };
+            return ExecuteWrite(query, args);
+        }
         #endregion
     }
 }
