@@ -63,9 +63,9 @@
             lbDescription.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lbDescription.ForeColor = Color.White;
             lbDescription.Location = new Point(337, 103);
-            lbDescription.MaximumSize = new Size(300, 0);
+            lbDescription.MaximumSize = new Size(400, 0);
             lbDescription.Name = "lbDescription";
-            lbDescription.Size = new Size(297, 60);
+            lbDescription.Size = new Size(369, 40);
             lbDescription.TabIndex = 2;
             lbDescription.Text = "test--------------------------------------------------------\r\nn\r\n";
             lbDescription.UseMnemonic = false;
