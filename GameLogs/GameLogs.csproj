@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Connection2DB\DBConnector.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.2.0" />
     <PackageReference Include="NuGet.Frameworks" Version="6.8.0" />
     <PackageReference Include="runtime.native.System.Data.SqlClient.sni" Version="4.7.0" />
