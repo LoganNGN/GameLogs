@@ -1,29 +1,33 @@
 using System.Data;
-using GameLogs.apiDataCollection;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GameLogs
 {
     internal static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        /// The main entry point for the application.
         /// </summary>
-
-        private static ApiData apiData = new ApiData();
+        private static APIConnector.GameInfo gameInfo = new APIConnector.GameInfo(gameData);
+        private static dynamic gameData;
 
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            // Initialize application configuration
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
-            SelectAllQuery();
-            InsertQuery(apiData);
+            // Run the API Connector
+            APIConnector apiConnector = new APIConnector();
+            string[] gameNames = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "games.txt"));
+            apiConnector.ProcessGames(gameNames).Wait();
+            //run Query's
+            //SelectAllQuery();
+            InsertQuery(gameInfo);
         }
         #region DataBase execute Methods
         private static int ExecuteWrite(string query, Dictionary<string, object> args)
@@ -75,22 +79,20 @@ namespace GameLogs
         }       
         #endregion
         #region CRUD
-        private static int InsertQuery(ApiData apiData)
+        private static int InsertQuery(APIConnector.GameInfo gameInfo)
         {
-            //TODO when sven finishes the json deserialiser and gives me the files, insert the path to the file for the query
-
             //prepare the query
             string query = "INSERT INTO Game (id, name, description, image)" + " VALUES(@id, @name, @description, @image);";
             //parameters
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.Id}, {"@name", apiData.Name}, {"@description", apiData.Description}, {"@image", apiData.Image}
+                {"@id", gameInfo.Id}, {"@name", gameInfo.Name}, {"@description", gameInfo.Description}, {"@image",  gameInfo.BackgroundImage}
             };
             return ExecuteWrite(query, args);
         }
 
         //method for the researche bar
-        private static ApiData SelectGameByName(string name)
+        private static APIConnector.GameInfo SelectGameByName(string name)
         {
             var query = "SELECT * FROM Game WHERE name = @name";
             var args = new Dictionary<string, object>
@@ -102,17 +104,17 @@ namespace GameLogs
             {
                 return null;
             }
-            var apiData = new ApiData
+            var gameInfo = new APIConnector.GameInfo(gameData : dt)
             {
                 Id = Convert.ToInt32(dt.Rows[0]["Id"]),
                 Name = Convert.ToString(dt.Rows[0]["Name"]),
                 Description = Convert.ToString(dt.Rows[0]["Description"]),
-                Image = Convert.ToString(dt.Rows[0]["Image"])
+                BackgroundImage = Convert.ToString(dt.Rows[0]["Image"])
             };    
-            return apiData;
+            return gameInfo;
         }
 
-        private static ApiData SelectAllQuery()
+        private static APIConnector.GameInfo SelectAllQuery()
         {
             var query = "SELECT * FROM Game";
             var args = new Dictionary<string, object>()
@@ -125,17 +127,17 @@ namespace GameLogs
                 Console.WriteLine("empty");
                 return null;
             }
-            var apiData = new ApiData
+            var gameInfo = new APIConnector.GameInfo(gameData: dt)
             {
                 Id = Convert.ToInt32(dt.Rows[0]["Id"]),
                 Name = Convert.ToString(dt.Rows[0]["Name"]),
                 Description = Convert.ToString(dt.Rows[0]["Description"]),
-                Image = Convert.ToString(dt.Rows[0]["Image"])
+                BackgroundImage = Convert.ToString(dt.Rows[0]["Image"])
             };
-            return apiData;
+            return gameInfo;
         }
 
-        private static int UpdateQuery(ApiData apiData)
+        private static int UpdateQuery(APIConnector.GameInfo gameInfo)
         {
             //prepare the query
             //change query if needed
@@ -144,17 +146,17 @@ namespace GameLogs
             //parameter
             var args = new Dictionary<string, object>()
             {
-                {"@id", apiData.Id }
+                {"@id", gameInfo.Id }
             };
             return ExecuteWrite(query, args);
         }
 
-        private static int DeleteQuery(ApiData apiData)
+        private static int DeleteQuery(APIConnector.GameInfo gameInfo)
         {
             const string query = "Delete from Game WHERE Id = @id";
             var args = new Dictionary<string, object>
             {
-                {"@id", apiData.Id}
+                {"@id", gameInfo.Id}
             };
             return ExecuteWrite(query, args);
         }
