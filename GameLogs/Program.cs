@@ -127,7 +127,7 @@ namespace GameLogs
                 Console.WriteLine("empty");
                 return null;
             }
-            var gameInfo = new APIConnector.GameInfo(gameData: dt)
+            var gameInfo = new APIConnector.GameInfo(gameData : dt)
             {
                 Id = Convert.ToInt32(dt.Rows[0]["Id"]),
                 Name = Convert.ToString(dt.Rows[0]["Name"]),
