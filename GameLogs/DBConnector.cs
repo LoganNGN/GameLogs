@@ -7,7 +7,7 @@ namespace PrototypeDbConnector
         //The collection of results
         static List<string> users = new List<string>();
 
-        static void Main(string[] args)
+        static void Maine(string[] args)
         {
             users = ExecuteQuerySelect();
 
