@@ -14,6 +14,7 @@ namespace GameLogs
         /// </summary>
         private static APIConnector.GameInfo gameInfo = new APIConnector.GameInfo(gameData);
         private static dynamic gameData;
+        private static System.Data.DataTable gameDataTable = new DataTable();
 
         [STAThread]
         static void Main()
@@ -26,8 +27,8 @@ namespace GameLogs
             string[] gameNames = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "games.txt"));
             apiConnector.ProcessGames(gameNames);
             //run Query's
-            //SelectAllQuery();
-            InsertQuery(gameInfo);
+            SelectAllQuery();
+            //InsertQuery(gameInfo);
         }
         #region DataBase execute Methods
         private static int ExecuteWrite(string query, Dictionary<string, object> args)
