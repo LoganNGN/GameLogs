@@ -28,7 +28,7 @@ namespace GameLogs
             apiConnector.ProcessGames(gameNames);
             //run Query's
             SelectAllQuery();
-            //InsertQuery(gameInfo);
+            InsertQuery(gameInfo);
         }
         #region DataBase execute Methods
         private static int ExecuteWrite(string query, Dictionary<string, object> args)
