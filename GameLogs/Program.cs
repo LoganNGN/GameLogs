@@ -10,7 +10,7 @@ namespace GameLogs
     internal static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        ///  The main entry point for the application.
         /// </summary>
         private static APIConnector.GameInfo gameInfo = new APIConnector.GameInfo(gameData);
         private static dynamic gameData;
@@ -19,9 +19,10 @@ namespace GameLogs
         [STAThread]
         static void Main()
         {
-            // Initialize application configuration
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new Acceuil());
             // Run the API Connector
             APIConnector apiConnector = new APIConnector();
             string[] gameNames = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "games.txt"));
