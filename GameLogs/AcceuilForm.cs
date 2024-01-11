@@ -25,13 +25,10 @@ namespace GameLogs
             {
                 try
                 {
-                    Dictionary<string, object> gameData = await apiConnector.GetGameData(_searchText, "Games");
-                    await apiConnector.ProcessGames(new string[] { _searchText });
+                    string[] gameNameRecherche = _searchText.Split(",");
+                    await apiConnector.ProcessGames(gameNameRecherche);
                     MessageBox.Show($"Recherche réussie pour le jeu : {_searchText}");
-
-                    // Utilisez le dictionnaire gameData comme vous le souhaitez
-                    // Par exemple, vous pouvez l'utiliser pour mettre à jour votre interface utilisateur (UI)
-                    UpdateGui(gameData);
+                    
                 }
                 catch (Exception ex)
                 {
@@ -44,21 +41,20 @@ namespace GameLogs
             }
         }
 
-        private void UpdateGui(Dictionary<string, object> gameData)
+        /*private void UpdateGui()
         {
-            if (gameData != null)
+            if ( != null)
             {
-                // Assurez-vous que "Name" existe dans le dictionnaire avant d'y accéder
                 if (gameData.ContainsKey("Name"))
                 {
+                    gbGame.Visible = true;
                     this.lbTitle.Text = gameData["Name"].ToString();
                 }
                 else
                 {
-                    // Traitez le cas où "Name" n'existe pas dans le dictionnaire
-                    this.lbTitle.Text = "Nom non disponible";
+                    MessageBox.Show("Veuillez entrer un nom de jeu valide.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
+        }*/
     }
 }

@@ -37,9 +37,9 @@
             // imgGame
             // 
             imgGame.Image = Properties.Resources.imgTestRobot;
-            imgGame.Location = new Point(12, 53);
+            imgGame.Location = new Point(-1, 0);
             imgGame.Name = "imgGame";
-            imgGame.Size = new Size(297, 320);
+            imgGame.Size = new Size(801, 454);
             imgGame.SizeMode = PictureBoxSizeMode.Zoom;
             imgGame.TabIndex = 0;
             imgGame.TabStop = false;
