@@ -7,6 +7,7 @@ namespace GameLogs
         #region private attributes
         private readonly APIConnector apiConnector = new APIConnector();
         private string _searchText = null;
+        
         #endregion private attributes
 
         #region public attributes
@@ -26,8 +27,10 @@ namespace GameLogs
                 try
                 {
                     string[] gameNameRecherche = _searchText.Split(",");
+                    string[] gameNames = _seachText.Split(",");
                     await apiConnector.ProcessGames(gameNameRecherche);
                     MessageBox.Show($"Recherche réussie pour le jeu : {_searchText}");
+                    UpdateGui();
                     
                 }
                 catch (Exception ex)
@@ -41,20 +44,19 @@ namespace GameLogs
             }
         }
 
-        /*private void UpdateGui()
+        private void UpdateGui()
         {
-            if ( != null)
+            if (_searchText != null)
             {
-                if (gameData.ContainsKey("Name"))
-                {
-                    gbGame.Visible = true;
-                    this.lbTitle.Text = gameData["Name"].ToString();
-                }
-                else
-                {
-                    MessageBox.Show("Veuillez entrer un nom de jeu valide.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+
+                gbGame.Visible = true;
+                this.lbTitle.Text = _searchText;
             }
-        }*/
+            else
+            {
+                MessageBox.Show("Veuillez entrer un nom de jeu valide.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
+        }
     }
 }
