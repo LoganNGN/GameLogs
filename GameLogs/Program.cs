@@ -24,9 +24,9 @@ namespace GameLogs
             ApplicationConfiguration.Initialize();
             Application.Run(new Acceuil());
             // Run the API Connector
-            //APIConnector apiConnector = new APIConnector();
-            //string[] gameNames = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "games.txt"));
-            //apiConnector.ProcessGames(gameNames);
+            APIConnector apiConnector = new APIConnector();
+            string[] gameNames = File.ReadAllLines(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs", "games.txt"));
+            apiConnector.ProcessGames(gameNames);
             //run Query's
             SelectAllQuery();
             InsertQuery(gameInfo);

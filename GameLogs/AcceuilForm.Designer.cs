@@ -68,6 +68,7 @@
             btmDescriptionVoir.TabIndex = 0;
             btmDescriptionVoir.Text = "Voir";
             btmDescriptionVoir.UseVisualStyleBackColor = false;
+            btmDescriptionVoir.Click += btmDescriptionVoir_Click;
             // 
             // tbRecherche
             // 

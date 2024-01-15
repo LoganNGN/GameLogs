@@ -36,10 +36,11 @@
             // 
             // imgGame
             // 
+            imgGame.BackColor = Color.Transparent;
             imgGame.Image = Properties.Resources.imgTestRobot;
-            imgGame.Location = new Point(-1, 0);
+            imgGame.Location = new Point(0, -1);
             imgGame.Name = "imgGame";
-            imgGame.Size = new Size(801, 454);
+            imgGame.Size = new Size(913, 567);
             imgGame.SizeMode = PictureBoxSizeMode.Zoom;
             imgGame.TabIndex = 0;
             imgGame.TabStop = false;
@@ -48,9 +49,10 @@
             // lbTitle
             // 
             lbTitle.AutoSize = true;
+            lbTitle.BackColor = Color.Transparent;
             lbTitle.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point);
             lbTitle.ForeColor = Color.White;
-            lbTitle.Location = new Point(337, 53);
+            lbTitle.Location = new Point(109, 21);
             lbTitle.Name = "lbTitle";
             lbTitle.Size = new Size(68, 40);
             lbTitle.TabIndex = 1;
@@ -60,14 +62,15 @@
             // lbDescription
             // 
             lbDescription.AutoSize = true;
+            lbDescription.BackColor = Color.Transparent;
             lbDescription.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             lbDescription.ForeColor = Color.White;
-            lbDescription.Location = new Point(337, 103);
-            lbDescription.MaximumSize = new Size(400, 0);
+            lbDescription.Location = new Point(109, 76);
+            lbDescription.MaximumSize = new Size(700, 0);
             lbDescription.Name = "lbDescription";
-            lbDescription.Size = new Size(369, 40);
+            lbDescription.Size = new Size(699, 40);
             lbDescription.TabIndex = 2;
-            lbDescription.Text = "test--------------------------------------------------------\r\nn\r\n";
+            lbDescription.Text = "test--------------------------------------------------------wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\r\n";
             lbDescription.UseMnemonic = false;
             // 
             // descriptionGame
@@ -75,7 +78,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(911, 562);
             Controls.Add(lbDescription);
             Controls.Add(lbTitle);
             Controls.Add(imgGame);
