@@ -56,13 +56,18 @@ internal class APIConnector
             if (gameInfo != null)
             {
                 Dictionary<string, object> gameData = GetGameData(gameInfo, "Games");
+                
 
                 await WriteToFile(gameName, gameInfo);
-            } 
+            }
+            else
+            {
+                throw new GameNotFoundException("le jeu n'a pas été trouver");
+            }
         }
     }
 
-    private async Task<GameInfo> GetGameInfo(string gameName)
+    public async Task<GameInfo> GetGameInfo(string gameName)
     {
         HttpResponseMessage response = await client.GetAsync($"https://api.rawg.io/api/games/{gameName}?key={apiKey}");
         if (response.IsSuccessStatusCode)
@@ -112,7 +117,7 @@ internal class APIConnector
     }
 
 
-    private async Task WriteToFile(string gameName, GameInfo gameInfo)
+    public async Task WriteToFile(string gameName, GameInfo gameInfo)
     {
         string jsonData = JsonConvert.SerializeObject(gameInfo, Formatting.Indented);
 
