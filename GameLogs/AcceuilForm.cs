@@ -28,10 +28,9 @@ namespace GameLogs
             {
                 try
                 {
-                    await apiConnector.ProcessGames(new string[] { _searchText });
-                    string[] gameNameRecherche = _searchText.Split(",");
-                    string[] gameNames = _seachText.Split(",");
-                    await apiConnector.ProcessGames(gameNameRecherche);
+                    
+                    apiConnector.ProcessGames(new string[] { _searchText });
+                    
                     MessageBox.Show($"Recherche réussie pour le jeu : {_searchText}");
                     UpdateGui();
                     
