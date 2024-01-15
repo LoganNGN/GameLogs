@@ -7,6 +7,7 @@ internal class APIConnector
     private readonly string basePath;
     public APIConnector()
     {
+        // TODO mettre _seachText à la place du fichier
         basePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source", "repos", "GameLogs", "GameLogs");
         string apiKeyPath = Path.Combine(basePath, "apikey.txt");
         apiKey = File.ReadAllText(apiKeyPath);
@@ -56,6 +57,7 @@ internal class APIConnector
             if (gameInfo != null)
             {
                 Dictionary<string, object> gameData = GetGameData(gameInfo, "Games");
+                
 
                 await WriteToFile(gameName, gameInfo);
             } 

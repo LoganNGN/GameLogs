@@ -21,11 +21,14 @@ namespace GameLogs
         private async void btmRecherche_Click(object sender, EventArgs e)
         {
             _searchText = tbRecherche.Text.Trim();
+            
+
 
             if (!string.IsNullOrEmpty(_searchText))
             {
                 try
                 {
+                    await apiConnector.ProcessGames(new string[] { _searchText });
                     string[] gameNameRecherche = _searchText.Split(",");
                     string[] gameNames = _seachText.Split(",");
                     await apiConnector.ProcessGames(gameNameRecherche);
